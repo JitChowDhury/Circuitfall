@@ -13,6 +13,7 @@
 *.log
 
 #Assets
+.idea/
 /[Aa]ssets/Imported Assets/
 #/[Aa]ssets/Scenes/
 
