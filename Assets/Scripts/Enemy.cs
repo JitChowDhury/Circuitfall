@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        //agent.SetDestination(waypoint.position);
+        waypoints = FindFirstObjectByType<WayPointManager>().GetWayPoints();
     }
 
     // Update is called once per frame
