@@ -50,7 +50,8 @@ public class Enemy : MonoBehaviour
     {
         if (currentIndex >= waypoints.Length)
         {
-            return transform.position;
+            currentIndex = 0;
+            //return transform.position;
         } 
         Vector3 nextDestination = waypoints[currentIndex].position;
 
