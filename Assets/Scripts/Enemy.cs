@@ -14,6 +14,8 @@ public class Enemy : MonoBehaviour
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        agent.updateRotation = false;
+        agent.avoidancePriority = (int)(agent.speed * 10);
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
