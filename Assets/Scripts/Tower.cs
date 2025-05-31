@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Tower : MonoBehaviour
 {
@@ -12,7 +14,14 @@ public class Tower : MonoBehaviour
      [SerializeField] protected float attackRange = 2.5f;
      [SerializeField] protected LayerMask whatIsEnemy;
      [SerializeField] protected float attackCooldown=1;
+
+     private bool canRotate;
      protected float lastTimeAttacked;
+
+     protected virtual void Awake()
+     {
+     }
+
      protected virtual void Update()
      {
           
@@ -41,8 +50,14 @@ public class Tower : MonoBehaviour
      {
           Debug.Log("Attack performed at" + Time.time);
      }
+
+     public void EnableRotation(bool enable)
+     {
+          canRotate = enable;
+     }
      protected void RotateTowardsEnemy()
      {
+          if(canRotate==false)return;
           if(currentEnemy==null)return;
           //calculate the vector direction from the tower's head to the current enemy
           Vector3 directionToEnemy = currentEnemy.position - towerHead.position;
