@@ -37,7 +37,7 @@ public class Tower : MonoBehaviour
           return false;
      }
 
-     protected void Attack()
+     protected virtual void Attack()
      {
           Debug.Log("Attack performed at" + Time.time);
      }
@@ -73,5 +73,10 @@ public class Tower : MonoBehaviour
      protected virtual void OnDrawGizmos()
      {
           Gizmos.DrawWireSphere(transform.position,attackRange);
+     }
+
+     protected Vector3 DirectionToEnemyFrom(Transform startPos)
+     {
+          return (currentEnemy.position - startPos.position).normalized;
      }
 }
