@@ -6,23 +6,42 @@ public class Tower : MonoBehaviour
      public Transform currentEnemy;
 
      [Header("Tower Setup")] 
-     [SerializeField] private Transform towerHead;
+     [SerializeField] protected Transform towerHead;
 
-     [SerializeField] private float rotationSpeed;
-     [SerializeField] private float attackRange = 2.2f;
-     [SerializeField] private LayerMask whatIsEnemy;
-     private void Update()
+     [SerializeField] protected float rotationSpeed=10f;
+     [SerializeField] protected float attackRange = 2.5f;
+     [SerializeField] protected LayerMask whatIsEnemy;
+     [SerializeField] protected float attackCooldown=1;
+     protected float lastTimeAttacked;
+     protected virtual void Update()
      {
+          
           if (currentEnemy == null)
           {
               currentEnemy= FindRandomEnemiesWithinTarget();
                return;
           }
+          if(CanAttack()) Attack();
           if (Vector3.Distance(currentEnemy.position, transform.position) > attackRange) currentEnemy = null;
           RotateTowardsEnemy();
      }
 
-     private void RotateTowardsEnemy()
+     protected bool CanAttack()
+     {
+          if (Time.time > lastTimeAttacked + attackCooldown)
+          {
+               lastTimeAttacked = Time.time;
+               return true;
+          }
+
+          return false;
+     }
+
+     protected void Attack()
+     {
+          Debug.Log("Attack performed at" + Time.time);
+     }
+     protected void RotateTowardsEnemy()
      {
           if(currentEnemy==null)return;
           //calculate the vector direction from the tower's head to the current enemy
@@ -36,7 +55,7 @@ public class Tower : MonoBehaviour
           towerHead.rotation=Quaternion.Euler(rotation);
      }
 
-     private Transform FindRandomEnemiesWithinTarget()
+     protected Transform FindRandomEnemiesWithinTarget()
      {
           List<Transform> possibleTargets = new List<Transform>();
           Collider[] enemiesAround = Physics.OverlapSphere(transform.position, attackRange,whatIsEnemy);
@@ -51,7 +70,7 @@ public class Tower : MonoBehaviour
 
      }
      
-     private void OnDrawGizmos()
+     protected virtual void OnDrawGizmos()
      {
           Gizmos.DrawWireSphere(transform.position,attackRange);
      }
