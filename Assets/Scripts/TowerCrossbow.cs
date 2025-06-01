@@ -19,6 +19,7 @@ public class TowerCrossbow : Tower
         {
             towerHead.forward = direction;
             visuals.PlayAttackVFX(gunPoint.position,hitInfo.point);
+            visuals.PlayReloadVFX((attackCooldown));
         }
     }
 }

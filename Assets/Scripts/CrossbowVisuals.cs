@@ -11,11 +11,15 @@ public class CrossbowVisuals : MonoBehaviour
 
     [Header("Glowing Visuals")] 
     [SerializeField] private MeshRenderer meshRenderer;
-    [SerializeField] private Material material;
+    private Material material;
     
     [Space]
-    [SerializeField] private float currentIntensity;
+    private float currentIntensity;
     [SerializeField] private float maxIntensity=150;
+    [Space]
+    [SerializeField] private Color startColor;
+    [SerializeField] private Color endColor;
+    
     
     
 
@@ -24,7 +28,25 @@ public class CrossbowVisuals : MonoBehaviour
         myTower = GetComponent<TowerCrossbow>();
         material = new Material(meshRenderer.material);//creates a new instance of the material
         meshRenderer.material = material;//assigns it to material 
-        StartCoroutine(ChangeEmissionRoutine(3));
+
+        StartCoroutine(ChangeEmissionRoutine(1));
+
+    }
+
+    private void Update()
+    {
+        UpdateEmissionColor();
+    }
+
+    public void PlayReloadVFX(float duration)
+    {
+        StartCoroutine(ChangeEmissionRoutine(duration/2));
+    }
+    private void UpdateEmissionColor()
+    {
+        Color emissionColor = Color.Lerp(startColor, endColor, currentIntensity / maxIntensity);
+        emissionColor = emissionColor * Mathf.LinearToGammaSpace(currentIntensity);
+        material.SetColor("_EmissionColor",emissionColor);
     }
 
     public void PlayAttackVFX(Vector3 startPoint, Vector3 endPoint)
