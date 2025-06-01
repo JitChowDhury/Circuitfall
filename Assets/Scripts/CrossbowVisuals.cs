@@ -20,6 +20,24 @@ public class CrossbowVisuals : MonoBehaviour
     [SerializeField] private Color startColor;
     [SerializeField] private Color endColor;
     
+    [Header("Front Glow String")]
+    [SerializeField]   private LineRenderer frontString_L;
+    [SerializeField]   private LineRenderer frontString_R;
+    [Space]
+    [SerializeField] private Transform frontStartPoint_L;
+    [SerializeField] private Transform frontStartPoint_R;
+    [SerializeField] private Transform frontEndPoint_L;
+    [SerializeField] private Transform frontEndPoint_R;
+    [Space]
+    [Header("Back Glow String")]
+    [SerializeField]   private LineRenderer backString_L;
+    [SerializeField]   private LineRenderer backString_R;
+    [Space]
+    [SerializeField] private Transform backStartPoint_L;
+    [SerializeField] private Transform backStartPoint_R;
+    [SerializeField] private Transform backEndPoint_L;
+    [SerializeField] private Transform backEndPoint_R;
+    
     
     
 
@@ -36,6 +54,12 @@ public class CrossbowVisuals : MonoBehaviour
     private void Update()
     {
         UpdateEmissionColor();
+        UpdateStringVisual(frontString_R,frontStartPoint_R,frontEndPoint_R);
+        UpdateStringVisual(frontString_L,frontStartPoint_L,frontEndPoint_L);        
+        
+        UpdateStringVisual(backString_R,backStartPoint_R,backEndPoint_R);
+        UpdateStringVisual(backString_L,backStartPoint_L,backEndPoint_L);
+        
     }
 
     public void PlayReloadVFX(float duration)
@@ -48,7 +72,7 @@ public class CrossbowVisuals : MonoBehaviour
         emissionColor = emissionColor * Mathf.LinearToGammaSpace(currentIntensity);
         material.SetColor("_EmissionColor",emissionColor);
     }
-
+ 
     public void PlayAttackVFX(Vector3 startPoint, Vector3 endPoint)
     {
         StartCoroutine(VFXCoroutine(startPoint, endPoint));
@@ -78,5 +102,11 @@ public class CrossbowVisuals : MonoBehaviour
         yield return new WaitForSeconds(attackVisualDuration);
         attackVisuals.enabled = false;
         myTower.EnableRotation(true);
+    }
+
+    private void UpdateStringVisual(LineRenderer lineRenderer, Transform startPoint, Transform endPoint)
+    {
+        lineRenderer.SetPosition(0,startPoint.position);
+        lineRenderer.SetPosition(1,endPoint.position);
     }
 }
