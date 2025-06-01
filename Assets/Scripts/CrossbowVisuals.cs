@@ -20,6 +20,12 @@ public class CrossbowVisuals : MonoBehaviour
     [SerializeField] private Color startColor;
     [SerializeField] private Color endColor;
     
+    [Header("Rotor Visuals")]
+    [SerializeField] private Transform rotor;
+    [SerializeField] private Transform rotorunloaded;
+    [SerializeField] private Transform rotorloaded;
+
+    
     [Header("Front Glow String")]
     [SerializeField]   private LineRenderer frontString_L;
     [SerializeField]   private LineRenderer frontString_R;
@@ -37,8 +43,8 @@ public class CrossbowVisuals : MonoBehaviour
     [SerializeField] private Transform backStartPoint_R;
     [SerializeField] private Transform backEndPoint_L;
     [SerializeField] private Transform backEndPoint_R;
-    
-    
+
+    [SerializeField] private LineRenderer[] lineRenderers;
     
 
     private void Awake()
@@ -47,24 +53,40 @@ public class CrossbowVisuals : MonoBehaviour
         material = new Material(meshRenderer.material);//creates a new instance of the material
         meshRenderer.material = material;//assigns it to material 
 
+        UpdateMaterialsOnLineRenderer();
+
         StartCoroutine(ChangeEmissionRoutine(1));
 
+    }
+
+    private void UpdateMaterialsOnLineRenderer()
+    {
+        foreach (var lr in lineRenderers)
+        {
+            lr.material = material;
+        }
     }
 
     private void Update()
     {
         UpdateEmissionColor();
+        UpdateStrings();
+    }
+
+    private void UpdateStrings()
+    {
         UpdateStringVisual(frontString_R,frontStartPoint_R,frontEndPoint_R);
         UpdateStringVisual(frontString_L,frontStartPoint_L,frontEndPoint_L);        
         
         UpdateStringVisual(backString_R,backStartPoint_R,backEndPoint_R);
         UpdateStringVisual(backString_L,backStartPoint_L,backEndPoint_L);
-        
     }
 
     public void PlayReloadVFX(float duration)
     {
-        StartCoroutine(ChangeEmissionRoutine(duration/2));
+        float newDuration = duration / 2;
+        StartCoroutine(ChangeEmissionRoutine(newDuration));
+        StartCoroutine(UpdateRotorPosRoutine(newDuration));
     }
     private void UpdateEmissionColor()
     {
@@ -91,6 +113,19 @@ public class CrossbowVisuals : MonoBehaviour
             yield return null;
             currentIntensity = maxIntensity;
         }
+    }
+
+    private IEnumerator UpdateRotorPosRoutine(float duration)
+    {
+        float startTime = Time.time;
+        while (Time.time - startTime < duration)
+        {
+            float tValue = (Time.time - startTime) / duration;
+            rotor.position = Vector3.Lerp(rotorunloaded.position, rotorloaded.position, tValue);
+            yield return null;
+        }
+
+        rotor.position = rotorloaded.position;
     }
     private IEnumerator VFXCoroutine(Vector3 startPoint, Vector3 endPoint)
     {   myTower.EnableRotation(false);
