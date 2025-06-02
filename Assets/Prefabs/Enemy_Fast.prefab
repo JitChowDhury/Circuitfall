@@ -355,6 +355,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d843bc8d131beb04e8eb121f5938c91f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthPoints: 4
   waypoints:
   - {fileID: 0}
   - {fileID: 0}

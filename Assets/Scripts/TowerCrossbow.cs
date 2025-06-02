@@ -3,6 +3,7 @@ using UnityEngine;
 public class TowerCrossbow : Tower
 {
     [Header("CrossBow Details")]
+    [SerializeField] private int damage;
     [SerializeField] private Transform gunPoint;
 
     private CrossbowVisuals visuals;
@@ -20,6 +21,10 @@ public class TowerCrossbow : Tower
             towerHead.forward = direction;
             visuals.PlayAttackVFX(gunPoint.position,hitInfo.point);
             visuals.PlayReloadVFX((attackCooldown));
+
+            IDamagable damagable = hitInfo.transform.GetComponent<IDamagable>();
+            if(damagable!=null)
+                damagable.TakeDamage(damage);
         }
     }
 }
