@@ -5,6 +5,7 @@ using UnityEngine;
 public class CrossbowVisuals : MonoBehaviour
 {
     private TowerCrossbow myTower;
+    private Enemy myEnemy;
     
     [SerializeField] private LineRenderer attackVisuals;
     [SerializeField] private float attackVisualDuration = .1f;
@@ -71,6 +72,9 @@ public class CrossbowVisuals : MonoBehaviour
     {
         UpdateEmissionColor();
         UpdateStrings();
+        
+        if(attackVisuals.enabled && myEnemy!=null)
+            attackVisuals.SetPosition(1,myEnemy.CentrePoint());
     }
 
     private void UpdateStrings()
@@ -128,7 +132,8 @@ public class CrossbowVisuals : MonoBehaviour
         rotor.position = rotorloaded.position;
     }
     private IEnumerator VFXCoroutine(Vector3 startPoint, Vector3 endPoint)
-    {   myTower.EnableRotation(false);
+    {   //myTower.EnableRotation(false);
+        myEnemy = myTower.currentEnemy;
         
         attackVisuals.enabled = true;    
         attackVisuals.SetPosition(0,startPoint);
@@ -136,7 +141,7 @@ public class CrossbowVisuals : MonoBehaviour
         
         yield return new WaitForSeconds(attackVisualDuration);
         attackVisuals.enabled = false;
-        myTower.EnableRotation(true);
+        //myTower.EnableRotation(true);
     }
 
     private void UpdateStringVisual(LineRenderer lineRenderer, Transform startPoint, Transform endPoint)

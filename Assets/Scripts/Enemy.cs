@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour, IDamagable
     [Header("Movement")] [SerializeField] private Transform[] waypoints;
 
     [SerializeField] private float turnSpeed = 10f;
+    [SerializeField] private Transform centerPoint;
     private NavMeshAgent agent;
     private int currentIndex;
 
@@ -91,4 +92,7 @@ public class Enemy : MonoBehaviour, IDamagable
         //return the current target point;
         return nextDestination;
     }
+
+    public Vector3 CentrePoint()=>centerPoint.position;
+   
 }

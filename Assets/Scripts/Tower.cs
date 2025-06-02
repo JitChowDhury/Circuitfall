@@ -4,7 +4,7 @@ using Random = UnityEngine.Random;
 
 public class Tower : MonoBehaviour
 {
-    public Transform currentEnemy;
+    public Enemy currentEnemy;
 
     [Header("Tower Setup")] [SerializeField]
     protected Transform towerHead;
@@ -19,6 +19,7 @@ public class Tower : MonoBehaviour
 
     protected virtual void Awake()
     {
+        EnableRotation(true);
     }
 
     protected virtual void Update()
@@ -30,7 +31,7 @@ public class Tower : MonoBehaviour
         }
 
         if (CanAttack()) Attack();
-        if (Vector3.Distance(currentEnemy.position, transform.position) > attackRange) currentEnemy = null;
+        if (Vector3.Distance(currentEnemy.CentrePoint(), transform.position) > attackRange) currentEnemy = null;
         RotateTowardsEnemy();
     }
 
@@ -65,7 +66,7 @@ public class Tower : MonoBehaviour
         if (canRotate == false) return;
         if (currentEnemy == null) return;
         //calculate the vector direction from the tower's head to the current enemy
-        var directionToEnemy = currentEnemy.position - towerHead.position;
+        var directionToEnemy = DirectionToEnemyFrom(towerHead);
         //create a Quaternion for the rotation towards the direction of enemy
         var lookRotation = Quaternion.LookRotation(directionToEnemy);
         //smoothly rotates the tower head to the enemy
@@ -75,7 +76,7 @@ public class Tower : MonoBehaviour
         towerHead.rotation = Quaternion.Euler(rotation);
     }
 
-    protected Transform FindRandomEnemiesWithinTarget()
+    protected Enemy FindRandomEnemiesWithinTarget()
     {
         List<Enemy> possibleTargets = new List<Enemy>();
         Collider[] enemiesAround = Physics.OverlapSphere(transform.position, attackRange, whatIsEnemy);
@@ -89,7 +90,7 @@ public class Tower : MonoBehaviour
         Enemy newTarget = GetMostAdvancedenemy(possibleTargets);
         if (newTarget != null)
         {
-            return newTarget.transform;
+            return newTarget;
         }
 
         return null;
@@ -116,6 +117,6 @@ public class Tower : MonoBehaviour
 
     protected Vector3 DirectionToEnemyFrom(Transform startPos)
     {
-        return (currentEnemy.position - startPos.position).normalized;
+        return (currentEnemy.CentrePoint() - startPos.position).normalized;
     }
 }
