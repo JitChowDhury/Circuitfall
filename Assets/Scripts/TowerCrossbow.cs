@@ -19,12 +19,17 @@ public class TowerCrossbow : Tower
         if (Physics.Raycast(gunPoint.position, direction, out RaycastHit hitInfo, Mathf.Infinity))
         {
             towerHead.forward = direction;
-            visuals.PlayAttackVFX(gunPoint.position,hitInfo.point);
-            visuals.PlayReloadVFX((attackCooldown));
-
+            Enemy enemyTarget = null;
             IDamagable damagable = hitInfo.transform.GetComponent<IDamagable>();
-            if(damagable!=null)
+            if (damagable != null)
+            {
                 damagable.TakeDamage(damage);
+                enemyTarget = currentEnemy;
+            }
+
+
+            visuals.PlayAttackVFX(gunPoint.position,hitInfo.point,enemyTarget);
+            visuals.PlayReloadVFX((attackCooldown));
         }
     }
 }

@@ -92,7 +92,7 @@ public class Tower : MonoBehaviour
         towerHead.rotation = Quaternion.Euler(rotation);
     }
 
-    protected Enemy FindEnemyWithinTarget()
+    protected Enemy  FindEnemyWithinTarget()
     {
         List<Enemy> priorityTarget = new List<Enemy>();//stores enemies of the type specified
         List<Enemy> possibleTargets = new List<Enemy>();//stores all other enemies

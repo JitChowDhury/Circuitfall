@@ -73,6 +73,11 @@ public class CrossbowVisuals : MonoBehaviour
         UpdateEmissionColor();
         UpdateStrings();
         
+         UpdateAttackVisualIfNeeded();
+    }
+
+    private void UpdateAttackVisualIfNeeded()
+    {
         if(attackVisuals.enabled && myEnemy!=null)
             attackVisuals.SetPosition(1,myEnemy.CentrePoint());
     }
@@ -99,9 +104,9 @@ public class CrossbowVisuals : MonoBehaviour
         material.SetColor("_EmissionColor",emissionColor);
     }
  
-    public void PlayAttackVFX(Vector3 startPoint, Vector3 endPoint)
+    public void PlayAttackVFX(Vector3 startPoint, Vector3 endPoint,Enemy newEnemy)
     {
-        StartCoroutine(VFXCoroutine(startPoint, endPoint));
+        StartCoroutine(VFXCoroutine(startPoint, endPoint,newEnemy));
     }
 
     private IEnumerator ChangeEmissionRoutine(float duration)
@@ -131,9 +136,9 @@ public class CrossbowVisuals : MonoBehaviour
 
         rotor.position = rotorloaded.position;
     }
-    private IEnumerator VFXCoroutine(Vector3 startPoint, Vector3 endPoint)
+    private IEnumerator VFXCoroutine(Vector3 startPoint, Vector3 endPoint,Enemy newEnemy)
     {   //myTower.EnableRotation(false);
-        myEnemy = myTower.currentEnemy;
+        myEnemy = newEnemy;
         
         attackVisuals.enabled = true;    
         attackVisuals.SetPosition(0,startPoint);
