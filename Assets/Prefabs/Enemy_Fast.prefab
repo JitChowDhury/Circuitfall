@@ -351,7 +351,7 @@ GameObject:
   - component: {fileID: 6294462828537340719}
   - component: {fileID: 4739609754956983487}
   - component: {fileID: 7932276803554761295}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy_Fast
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -388,6 +388,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthPoints: 4
+  enemyType: 1
   waypoints:
   - {fileID: 0}
   - {fileID: 0}

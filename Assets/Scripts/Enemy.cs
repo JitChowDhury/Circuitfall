@@ -1,10 +1,16 @@
 using UnityEngine;
 using UnityEngine.AI;
 
+public enum EnemyType
+{
+    Basic,
+    Fast,
+    None
+};
 public class Enemy : MonoBehaviour, IDamagable
 {
     public int healthPoints = 4;
-
+    [SerializeField] private EnemyType enemyType;
     [Header("Movement")] [SerializeField] private Transform[] waypoints;
 
     [SerializeField] private float turnSpeed = 10f;
@@ -94,5 +100,6 @@ public class Enemy : MonoBehaviour, IDamagable
     }
 
     public Vector3 CentrePoint()=>centerPoint.position;
-   
+    public EnemyType GetEnemyType() => enemyType;
+
 }
