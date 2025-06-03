@@ -38,8 +38,13 @@ public class Tower : MonoBehaviour
         }
 
         if (CanAttack()) Attack();
-        if (Vector3.Distance(currentEnemy.CentrePoint(), transform.position) > attackRange) currentEnemy = null;
+        LooseTargetIfNeeded();
         RotateTowardsEnemy();
+    }
+
+    private void LooseTargetIfNeeded()
+    {
+        if (Vector3.Distance(currentEnemy.CentrePoint(), transform.position) > attackRange) currentEnemy = null;
     }
 
     private void UpdateTargetIfNeeded()
