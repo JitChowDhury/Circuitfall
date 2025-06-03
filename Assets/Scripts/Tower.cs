@@ -15,16 +15,22 @@ public class Tower : MonoBehaviour
     [SerializeField] protected LayerMask whatIsEnemy;
     [SerializeField] protected float attackCooldown = 1;
 
+    [Space] [Tooltip("Enabling this allows tower to change target between attack")] [SerializeField]
+    private bool dynamicTargetChange;
+    private float targetCheckInterval = .1f;
+    private float lastTimeCheckedTarget;
+
     private bool canRotate;
     protected float lastTimeAttacked;
 
     protected virtual void Awake()
     {
-        EnableRotation(true);
+        EnableRotation(true);//enables rotation so that tower head can turn to face enemies
     }
 
     protected virtual void Update()
     {
+        UpdateTargetIfNeeded();
         if (currentEnemy == null)
         {
             currentEnemy = FindEnemyWithinTarget();
@@ -36,6 +42,15 @@ public class Tower : MonoBehaviour
         RotateTowardsEnemy();
     }
 
+    private void UpdateTargetIfNeeded()
+    {
+        if(dynamicTargetChange==false)return;
+        if (Time.time > lastTimeCheckedTarget + targetCheckInterval)
+        {
+            lastTimeCheckedTarget = Time.time;
+            currentEnemy = FindEnemyWithinTarget();
+        }
+    }
     protected virtual void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, attackRange);
@@ -79,8 +94,8 @@ public class Tower : MonoBehaviour
 
     protected Enemy FindEnemyWithinTarget()
     {
-        List<Enemy> priorityTarget = new List<Enemy>();
-        List<Enemy> possibleTargets = new List<Enemy>();
+        List<Enemy> priorityTarget = new List<Enemy>();//stores enemies of the type specified
+        List<Enemy> possibleTargets = new List<Enemy>();//stores all other enemies
         Collider[] enemiesAround = Physics.OverlapSphere(transform.position, attackRange, whatIsEnemy);
         foreach (Collider enemy in enemiesAround)
         {

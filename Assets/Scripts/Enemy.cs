@@ -61,7 +61,7 @@ public class Enemy : MonoBehaviour, IDamagable
     {
         for (var i = 0; i < waypoints.Length - 1; i++)
         {
-            var distance = Vector3.Distance(waypoints[i].position, waypoints[i + 1].position);
+            var distance = Vector3.Distance(waypoints[i].position, waypoints[i + 1].position);//loops throght and calculates the distance between each waypoit and add it
             totalDistance += distance;
         }
     }
