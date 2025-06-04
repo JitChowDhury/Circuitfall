@@ -49,7 +49,7 @@ public class CrossbowVisuals : MonoBehaviour
 
     private void Awake()
     {
-        myTower = GetComponent<TowerCrossbow>();
+
         material = new Material(meshRenderer.material);//creates a new instance of the material
         meshRenderer.material = material;//assigns it to material 
 
