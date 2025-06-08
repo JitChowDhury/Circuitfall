@@ -43,5 +43,27 @@ public class TileSlotEditor : Editor
          }
       }
       GUILayout.EndHorizontal();
+      
+      GUILayout.BeginHorizontal();//Groups buttons horizontally.
+      
+      if (GUILayout.Button("Inner Corner", GUILayout.Width(buttonWidth)))
+      {
+         GameObject newTile = FindFirstObjectByType<TileSetHolder>().tileInnerCorner;
+         foreach (var targetTile in targets)
+         {
+               ((TileSlot)targetTile).switchTile(newTile);
+         }
+      }
+      
+      if (GUILayout.Button("Outer Corner", GUILayout.Width(buttonWidth)))
+      {
+         GameObject newTile = FindFirstObjectByType<TileSetHolder>().tileOuterCorner;
+         foreach (var targetTile in targets)
+         {
+            ((TileSlot)targetTile).switchTile(newTile);
+         }
+      }
+      
+      GUILayout.EndHorizontal();
    }
 }

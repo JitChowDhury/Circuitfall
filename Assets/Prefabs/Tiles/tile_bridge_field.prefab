@@ -117,9 +117,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8681414639982934790}
+  - component: {fileID: -4142051634639045782}
   - component: {fileID: 6155710522463937234}
   - component: {fileID: 4317363092523536491}
-  - component: {fileID: -4142051634639045782}
   m_Layer: 6
   m_Name: tile_bridge_field
   m_TagString: Untagged
@@ -143,6 +143,18 @@ Transform:
   - {fileID: 4591138514733216690}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-4142051634639045782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5182734772834221521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d13174a6643cabf4cb3155ac06e8d6fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!33 &6155710522463937234
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -196,15 +208,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &-4142051634639045782
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5182734772834221521}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d13174a6643cabf4cb3155ac06e8d6fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

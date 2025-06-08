@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3687572213787347669}
+  - component: {fileID: -2341643446723745516}
   - component: {fileID: 6452232514323955120}
   - component: {fileID: 316029361393566396}
   - component: {fileID: 3353846215056721280}
-  - component: {fileID: -2341643446723745516}
   m_Layer: 6
   m_Name: tile_hill_3
   m_TagString: Untagged
@@ -35,6 +35,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-2341643446723745516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 313699793590960915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d13174a6643cabf4cb3155ac06e8d6fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!33 &6452232514323955120
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -110,15 +122,3 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -2835245020478433565, guid: e4f015fced1635b4faf93701b2d56f47, type: 3}
---- !u!114 &-2341643446723745516
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 313699793590960915}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d13174a6643cabf4cb3155ac06e8d6fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

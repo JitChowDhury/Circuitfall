@@ -117,10 +117,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2350300563919318721}
+  - component: {fileID: 4621911581006431550}
   - component: {fileID: 3426478836777098937}
   - component: {fileID: 5126139701517132645}
   - component: {fileID: 7844933576682212722}
-  - component: {fileID: 4621911581006431550}
   m_Layer: 0
   m_Name: tile_sideway
   m_TagString: Untagged
@@ -144,6 +144,18 @@ Transform:
   - {fileID: 6393059355356722660}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4621911581006431550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8343453770915250946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d13174a6643cabf4cb3155ac06e8d6fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!33 &3426478836777098937
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -218,15 +230,3 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.5, y: 1, z: 1}
   m_Center: {x: 0.25, y: 0, z: 0}
---- !u!114 &4621911581006431550
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8343453770915250946}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d13174a6643cabf4cb3155ac06e8d6fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
