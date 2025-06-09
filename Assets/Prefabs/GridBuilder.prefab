@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2652093357156733254}
-  - component: {fileID: 4848078162103359403}
   - component: {fileID: 2513845766066849372}
+  - component: {fileID: 4848078162103359403}
   - component: {fileID: 8106350202601943798}
   m_Layer: 0
   m_Name: GridBuilder
@@ -34,6 +34,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2513845766066849372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 397667089231224355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f743a1c6a6906f34186fa1f65f9f035e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainPrefab: {fileID: 6628033180692180745, guid: 354be3260b9a59b4995c27e270ea480a, type: 3}
+  gridLength: 10
+  gridWidth: 10
+  createdTiles: []
 --- !u!114 &4848078162103359403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59,22 +75,6 @@ MonoBehaviour:
   tileBridgeField: {fileID: 5182734772834221521, guid: 66cbf4db83fee424d9f66b154b72be19, type: 3}
   tileBridgeRoad: {fileID: 4433934814353703643, guid: c19e7060e65b6bf47bfe86ca5a93aee5, type: 3}
   tileBridgeSideway: {fileID: 2697835224508864707, guid: 272a9ae0545970e4391e8aa662fcedc8, type: 3}
---- !u!114 &2513845766066849372
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 397667089231224355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f743a1c6a6906f34186fa1f65f9f035e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mainPrefab: {fileID: 6628033180692180745, guid: 354be3260b9a59b4995c27e270ea480a, type: 3}
-  gridLength: 10
-  gridWidth: 5
-  createdTiles: []
 --- !u!114 &8106350202601943798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,7 +95,7 @@ MonoBehaviour:
   m_LayerMask:
     serializedVersion: 2
     m_Bits: 64
-  m_UseGeometry: 0
+  m_UseGeometry: 1
   m_DefaultArea: 0
   m_GenerateLinks: 0
   m_IgnoreNavMeshAgent: 1
