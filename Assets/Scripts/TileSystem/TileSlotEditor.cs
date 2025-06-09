@@ -129,6 +129,28 @@ public class TileSlotEditor : Editor
       
       GUILayout.EndHorizontal();
       
+      GUILayout.BeginHorizontal();//Groups buttons horizontally.
+      
+      if (GUILayout.Button("Inner Corner Small", GUILayout.Width(twoButtonWidth)))
+      {
+         GameObject newTile = FindFirstObjectByType<TileSetHolder>().tileInnerCornerSmall;
+         foreach (var targetTile in targets)
+         {
+            ((TileSlot)targetTile).switchTile(newTile);
+         }
+      }
+      
+      if (GUILayout.Button("Outer Corner Small", GUILayout.Width(twoButtonWidth)))
+      {
+         GameObject newTile = FindFirstObjectByType<TileSetHolder>().tileOuterCornerSmall;
+         foreach (var targetTile in targets)
+         {
+            ((TileSlot)targetTile).switchTile(newTile);
+         }
+      }
+      
+      GUILayout.EndHorizontal();
+      
       GUILayout.Label("Bridges and Hills",centeredStyle);
       
       GUILayout.BeginHorizontal();//Groups buttons horizontally.
