@@ -172,9 +172,9 @@ public class TileSlotEditor : Editor
             ((TileSlot)targetTile).switchTile(newTile);
          }
       }
-      if (GUILayout.Button("Bridge with field", GUILayout.Width(threeButtonWidth)))
+      if (GUILayout.Button("Hill 3", GUILayout.Width(threeButtonWidth)))
       {
-         GameObject newTile = FindFirstObjectByType<TileSetHolder>().tileBridgeRoad;
+         GameObject newTile = FindFirstObjectByType<TileSetHolder>().tileHill_3;
          foreach (var targetTile in targets)
          {
             ((TileSlot)targetTile).switchTile(newTile);
@@ -187,16 +187,16 @@ public class TileSlotEditor : Editor
       
       if (GUILayout.Button("Bridge With road", GUILayout.Width(threeButtonWidth)))
       {
-         GameObject newTile = FindFirstObjectByType<TileSetHolder>().tileBridgeField;
+         GameObject newTile = FindFirstObjectByType<TileSetHolder>().tileBridgeRoad;
          foreach (var targetTile in targets)
          {
             ((TileSlot)targetTile).switchTile(newTile);
          }
       }
       
-      if (GUILayout.Button("Bridge with Road", GUILayout.Width(threeButtonWidth)))
+      if (GUILayout.Button("Bridge with Field", GUILayout.Width(threeButtonWidth)))
       {
-         GameObject newTile = FindFirstObjectByType<TileSetHolder>().tileBridgeRoad;
+         GameObject newTile = FindFirstObjectByType<TileSetHolder>().tileBridgeField;
          foreach (var targetTile in targets)
          {
             ((TileSlot)targetTile).switchTile(newTile);
