@@ -121,7 +121,7 @@ GameObject:
   - component: {fileID: 6155710522463937234}
   - component: {fileID: 4317363092523536491}
   - component: {fileID: 2876753785831259838}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: tile_bridge_field
   m_TagString: Untagged
   m_Icon: {fileID: 0}
