@@ -8,7 +8,9 @@ public class EnemyPortal : MonoBehaviour
     [SerializeField] float spawnCooldown;
     
     private float spawnTimer;
-    public List<GameObject> enemiesToCreate;
+    [Space]
+    
+    private List<GameObject> enemiesToCreate = new List<GameObject>();//when you make it public it is initialized by unity and when its private u have tio initialize it
 
     private void Awake()
     {
@@ -53,7 +55,7 @@ public class EnemyPortal : MonoBehaviour
         return chooseEnemy;
     }
 
-    public List<GameObject> GetEnemyList() => enemiesToCreate;
+    public void AddEnemy(GameObject enemyToAdd) => enemiesToCreate.Add(enemyToAdd);
 
     [ContextMenu("Collect Waypoints")]
     private void CollectWaypoints()//collects all the child waypoints

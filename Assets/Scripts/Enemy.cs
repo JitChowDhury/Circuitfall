@@ -19,7 +19,8 @@ public class Enemy : MonoBehaviour, IDamagable
     [SerializeField] private float turnSpeed = 10f;
     [SerializeField] private Transform centerPoint;
     private NavMeshAgent agent;
-    private int currentIndex;
+    private int nextWayPointIndex;
+    private int currentWayPointIndex;
 
     private float totalDistance;
 
@@ -48,9 +49,26 @@ public class Enemy : MonoBehaviour, IDamagable
     {
         FaceTarget(agent.steeringTarget);
         //checks if the agent is close to the current target point
-        if (agent.remainingDistance < 0.5)
+        if (ShouldChangeWaypoint())
             //set the destination to the next waypoint
             agent.SetDestination(GetNextWayPoints());
+    }
+
+    private bool ShouldChangeWaypoint()
+    {
+        if (nextWayPointIndex >= myWaypoints.Count) return false;
+
+        if (agent.remainingDistance < 0.5) return true;
+        
+        Vector3 currentWaypoint = myWaypoints[currentWayPointIndex].position;
+        Vector3 nextWaypoint = myWaypoints[nextWayPointIndex].position;
+
+        float distanceToNextWayPoint = Vector3.Distance(transform.position, nextWaypoint);
+        float distanceBetweenPoints = Vector3.Distance(currentWaypoint, nextWaypoint);
+
+        return (distanceBetweenPoints > distanceToNextWayPoint);
+
+
     }
 
     public void TakeDamage(int damage)
@@ -68,7 +86,7 @@ public class Enemy : MonoBehaviour, IDamagable
     {
         for (var i = 0; i < myWaypoints.Count - 1; i++)
         {
-            var distance = Vector3.Distance(myWaypoints[i].position, myWaypoints[i + 1].position);//loops throght and calculates the distance between each waypoit and add it
+            var distance = Vector3.Distance(myWaypoints[i].position, myWaypoints[i + 1].position);//loops through and calculates the distance between each waypoint and add it
             totalDistance += distance;
         }
     }
@@ -86,22 +104,23 @@ public class Enemy : MonoBehaviour, IDamagable
 
     private Vector3 GetNextWayPoints()
     {
-        //check if the waypoint index is beyonf the last waypoint
-        if (currentIndex >= myWaypoints.Count)
+        //check if the waypoint index is beyond the last waypoint
+        if (nextWayPointIndex >= myWaypoints.Count)
             //if true . return the agent's current position,effectively stopping it
             return transform.position;
         //get the current target point from the waypoints array
-        var nextDestination = myWaypoints[currentIndex].position;
+        var nextDestination = myWaypoints[nextWayPointIndex].position;
         //if this is not the first waypoint , calculate the distance from the previous waypoint
-        if (currentIndex > 0)
+        if (nextWayPointIndex > 0)
         {
-            var distance = Vector3.Distance(myWaypoints[currentIndex].position, myWaypoints[currentIndex - 1].position);
-            //substract this distance from the total distance
+            var distance = Vector3.Distance(myWaypoints[nextWayPointIndex].position, myWaypoints[nextWayPointIndex - 1].position);
+            //subtract this distance from the total distance
             totalDistance = totalDistance - distance;
         }
 
         //increment the waypoint index to move to the next waypoint on the next call
-        currentIndex++;
+        nextWayPointIndex++;
+        currentWayPointIndex=nextWayPointIndex-1;
         //return the current target point;
         return nextDestination;
     }
