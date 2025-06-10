@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 public enum EnemyType
 {
@@ -11,7 +13,8 @@ public class Enemy : MonoBehaviour, IDamagable
 {
     public int healthPoints = 4;
     [SerializeField] private EnemyType enemyType;
-    [Header("Movement")] [SerializeField] private Transform[] waypoints;
+    [FormerlySerializedAs("myNewWaypoints")] [Header("Movement")] [SerializeField] 
+    private List<Transform> myWaypoints;
 
     [SerializeField] private float turnSpeed = 10f;
     [SerializeField] private Transform centerPoint;
@@ -29,9 +32,13 @@ public class Enemy : MonoBehaviour, IDamagable
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    private void Start()
+    public void SetupEnemy(List<Waypoint> newWaypoints)
     {
-        waypoints = FindFirstObjectByType<WayPointManager>().GetWayPoints();
+        myWaypoints = new List<Transform>();
+        foreach (var point in newWaypoints)
+        {
+            myWaypoints.Add(point.transform);
+        }
         CollectTotalDistance();
     }
 
@@ -59,9 +66,9 @@ public class Enemy : MonoBehaviour, IDamagable
 
     private void CollectTotalDistance()
     {
-        for (var i = 0; i < waypoints.Length - 1; i++)
+        for (var i = 0; i < myWaypoints.Count - 1; i++)
         {
-            var distance = Vector3.Distance(waypoints[i].position, waypoints[i + 1].position);//loops throght and calculates the distance between each waypoit and add it
+            var distance = Vector3.Distance(myWaypoints[i].position, myWaypoints[i + 1].position);//loops throght and calculates the distance between each waypoit and add it
             totalDistance += distance;
         }
     }
@@ -80,15 +87,15 @@ public class Enemy : MonoBehaviour, IDamagable
     private Vector3 GetNextWayPoints()
     {
         //check if the waypoint index is beyonf the last waypoint
-        if (currentIndex >= waypoints.Length)
+        if (currentIndex >= myWaypoints.Count)
             //if true . return the agent's current position,effectively stopping it
             return transform.position;
         //get the current target point from the waypoints array
-        var nextDestination = waypoints[currentIndex].position;
+        var nextDestination = myWaypoints[currentIndex].position;
         //if this is not the first waypoint , calculate the distance from the previous waypoint
         if (currentIndex > 0)
         {
-            var distance = Vector3.Distance(waypoints[currentIndex].position, waypoints[currentIndex - 1].position);
+            var distance = Vector3.Distance(myWaypoints[currentIndex].position, myWaypoints[currentIndex - 1].position);
             //substract this distance from the total distance
             totalDistance = totalDistance - distance;
         }
