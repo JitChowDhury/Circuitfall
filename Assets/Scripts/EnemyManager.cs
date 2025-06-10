@@ -21,10 +21,11 @@ public class EnemyManager : MonoBehaviour
     private void Awake()
     {
         enemyPortals = new List<EnemyPortal>(FindObjectsByType<EnemyPortal>(FindObjectsSortMode.InstanceID));
+        //gets all the enemy portals in scene
     }
 
     [ContextMenu(("Setup Next Wave"))]
-    private void SetupNextWave()
+    private void SetupNextWave()//equally distribute enemy
     {
         List<GameObject> newEnemies = NewEnemyWave();
         int portalIndex = 0;
@@ -32,7 +33,7 @@ public class EnemyManager : MonoBehaviour
         {
             GameObject enemyToAdd = newEnemies[i];
             EnemyPortal portalToReceiveEnemy = enemyPortals[portalIndex];
-            portalToReceiveEnemy.GetEnemyList().Add(enemyToAdd);
+            portalToReceiveEnemy.GetEnemyList().Add(enemyToAdd);//add to createenemylist in enemyportal
             portalIndex++;
             if (portalIndex >= enemyPortals.Count)
             {

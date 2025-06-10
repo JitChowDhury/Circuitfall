@@ -18,7 +18,8 @@ public class EnemyPortal : MonoBehaviour
 
     private void Update()
     {
-    if(CanMakeNewEnemy())CreateEnemy();
+    if(CanMakeNewEnemy())
+        CreateEnemy();
        
     }
 
@@ -55,7 +56,7 @@ public class EnemyPortal : MonoBehaviour
     public List<GameObject> GetEnemyList() => enemiesToCreate;
 
     [ContextMenu("Collect Waypoints")]
-    private void CollectWaypoints()
+    private void CollectWaypoints()//collects all the child waypoints
     {
         waypointsList = new List<Waypoint>();
         foreach (Transform child in transform)
@@ -63,7 +64,8 @@ public class EnemyPortal : MonoBehaviour
             
             Waypoint waypoint = child.GetComponent<Waypoint>();
             if(waypoint!=null)
-                waypointsList.Add(waypoint);
+                waypointsList.Add(waypoint);//add in waypoint list
+            
         }
     }
 }
