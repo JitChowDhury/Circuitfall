@@ -16452,8 +16452,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00704a00f5ccb3449c609c8b8d02a5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waypoints:
-  - {fileID: 1557984504}
 --- !u!4 &643022299
 Transform:
   m_ObjectHideFlags: 0
@@ -42626,11 +42624,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.5, y: 1, z: 1}
   m_Center: {x: 0.25, y: 0, z: 0}
---- !u!4 &1557984504 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3528480390465023132, guid: cde44f47323268b4ea865127437eee7c, type: 3}
-  m_PrefabInstance: {fileID: 2021949671}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1558074029
 GameObject:
   m_ObjectHideFlags: 0
@@ -48289,10 +48282,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9e5f203181bd4b48b9d734495ac22ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPortals: []
-  currentWave:
-    basicEnemy: 15
-    fastEnemy: 4
+  levelWaves:
+  - basicEnemy: 10
+    fastEnemy: 2
+  - basicEnemy: 15
+    fastEnemy: 6
+  - basicEnemy: 25
+    fastEnemy: 9
   basicEnemy: {fileID: 6320003585906833732, guid: 43b724d6aa19c624088dcb1cf33a3025, type: 3}
   fastEnemy: {fileID: 8217082641000899223, guid: f6998374ca993804891b93d6f498ade4, type: 3}
 --- !u!4 &1773253632

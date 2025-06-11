@@ -10,9 +10,14 @@ public class WaveDetails
 }
 public class EnemyManager : MonoBehaviour
 {
-
+    public bool waveCompleted;
+    public float timeBetweenWaves = 10;
+    public float waveTimer;
     [SerializeField] private WaveDetails[] levelWaves;
     private int waveIndex;
+
+    private float checkInterval = .5f;
+    private float nextCheckTime;
      
     [Header("Enemy Prefabs")] 
     [SerializeField] private GameObject basicEnemy;
@@ -33,6 +38,39 @@ public class EnemyManager : MonoBehaviour
         SetupNextWave();
     }
 
+    private void Update()
+    {
+        HandleWaveCompletion();
+
+        HandleWaveTiming();
+    }
+
+    private void HandleWaveTiming()
+    {
+        if (waveCompleted)
+        {
+            waveTimer -= Time.deltaTime;
+            if(waveTimer<=0) SetupNextWave();
+        }
+    }
+
+    private void HandleWaveCompletion()
+    {
+        if(ReadyToCheck()==false) return;
+        if (waveCompleted == false && AllEnemiesDefeated())
+        {
+            waveCompleted = true;
+            waveTimer = timeBetweenWaves;
+        }
+    }
+
+    public void ForceNextWave()
+    {
+        if(AllEnemiesDefeated()==false)return;
+        
+        SetupNextWave();
+    }
+    
     [ContextMenu(("Setup Next Wave"))]
     private void SetupNextWave()//equally distribute enemy
     {
@@ -55,6 +93,8 @@ public class EnemyManager : MonoBehaviour
                 portalIndex = 0;
             }
         }
+
+        waveCompleted = false;
     }
     private List<GameObject> NewEnemyWave()
     {
@@ -76,5 +116,29 @@ public class EnemyManager : MonoBehaviour
 
         waveIndex++;
         return newEnemyList;
+    }
+
+    private bool AllEnemiesDefeated()
+    {
+        foreach (EnemyPortal portal in enemyPortals)
+        {
+            if (portal.GetActiveEnemies().Count > 0)
+            {
+                return false;
+            }
+
+        }
+            return true;
+    }
+
+    private bool ReadyToCheck()
+    {
+        if (Time.time >= nextCheckTime)
+        {
+            nextCheckTime = Time.time + checkInterval;
+            return true;
+        }
+
+        return false;
     }
 }

@@ -11,7 +11,7 @@ public class EnemyPortal : MonoBehaviour
     [Space]
     
     private List<GameObject> enemiesToCreate = new List<GameObject>();//when you make it public it is initialized by unity and when its private u have tio initialize it
-
+    private List<GameObject> activeEnemies = new List<GameObject>();
     private void Awake()
     {
         CollectWaypoints();
@@ -44,7 +44,9 @@ public class EnemyPortal : MonoBehaviour
         GameObject newEnemy=Instantiate(randomEnemy, transform.position, Quaternion.identity);
 
         Enemy enemyScript = newEnemy.GetComponent<Enemy>();
-        enemyScript.SetupEnemy(waypointsList);
+        enemyScript.SetupEnemy(waypointsList,this);
+
+        activeEnemies.Add(newEnemy);
     }
 
     private GameObject GetRandomEnemy()
@@ -56,6 +58,13 @@ public class EnemyPortal : MonoBehaviour
     }
 
     public void AddEnemy(GameObject enemyToAdd) => enemiesToCreate.Add(enemyToAdd);
+    public List<GameObject> GetActiveEnemies() => activeEnemies;
+
+    public void RemoveActiveEnemy(GameObject enemyToRemove)
+    {
+        if (activeEnemies.Contains(enemyToRemove))
+            activeEnemies.Remove(enemyToRemove);
+    }
 
     [ContextMenu("Collect Waypoints")]
     private void CollectWaypoints()//collects all the child waypoints

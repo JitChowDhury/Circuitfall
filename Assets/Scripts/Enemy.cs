@@ -11,6 +11,7 @@ public enum EnemyType
 };
 public class Enemy : MonoBehaviour, IDamagable
 {
+    private EnemyPortal myPortal;
     public int healthPoints = 4;
     [SerializeField] private EnemyType enemyType;
     [FormerlySerializedAs("myNewWaypoints")] [Header("Movement")] [SerializeField] 
@@ -33,7 +34,7 @@ public class Enemy : MonoBehaviour, IDamagable
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public void SetupEnemy(List<Waypoint> newWaypoints)
+    public void SetupEnemy(List<Waypoint> newWaypoints, EnemyPortal myNewPortal)
     {
         myWaypoints = new List<Transform>();
         foreach (var point in newWaypoints)
@@ -41,6 +42,7 @@ public class Enemy : MonoBehaviour, IDamagable
             myWaypoints.Add(point.transform);
         }
         CollectTotalDistance();
+        myPortal = myNewPortal;
     }
 
 
@@ -74,7 +76,7 @@ public class Enemy : MonoBehaviour, IDamagable
     public void TakeDamage(int damage)
     {
         healthPoints -= damage;
-        if (healthPoints <= 0) Destroy(gameObject);
+        if (healthPoints <= 0) Die();
     }
 
     public float DistanceToFinishLine()
@@ -128,4 +130,10 @@ public class Enemy : MonoBehaviour, IDamagable
     public Vector3 CentrePoint()=>centerPoint.position;
     public EnemyType GetEnemyType() => enemyType;
 
+    private void Die()
+    {
+        myPortal.RemoveActiveEnemy(gameObject);
+        Destroy(gameObject);
+        
+    }
 }
