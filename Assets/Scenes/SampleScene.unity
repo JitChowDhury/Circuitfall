@@ -48282,12 +48282,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9e5f203181bd4b48b9d734495ac22ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waveCompleted: 0
+  timeBetweenWaves: 5
+  waveTimer: 0
   levelWaves:
-  - basicEnemy: 10
+  - basicEnemy: 0
     fastEnemy: 2
-  - basicEnemy: 15
+  - basicEnemy: 0
     fastEnemy: 6
-  - basicEnemy: 25
+  - basicEnemy: 0
     fastEnemy: 9
   basicEnemy: {fileID: 6320003585906833732, guid: 43b724d6aa19c624088dcb1cf33a3025, type: 3}
   fastEnemy: {fileID: 8217082641000899223, guid: f6998374ca993804891b93d6f498ade4, type: 3}

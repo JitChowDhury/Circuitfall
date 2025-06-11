@@ -3,37 +3,39 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
 
+// Enum to define different enemy types
 public enum EnemyType
 {
     Basic,
     Fast,
     None
-};
+}
+
 public class Enemy : MonoBehaviour, IDamagable
 {
     private EnemyPortal myPortal;
     public int healthPoints = 4;
     [SerializeField] private EnemyType enemyType;
-    [FormerlySerializedAs("myNewWaypoints")] [Header("Movement")] [SerializeField] 
-    private List<Transform> myWaypoints;
+    [FormerlySerializedAs("myNewWaypoints")] 
+    [Header("Movement")] 
+    [SerializeField] private List<Transform> myWaypoints;
 
     [SerializeField] private float turnSpeed = 10f;
     [SerializeField] private Transform centerPoint;
     private NavMeshAgent agent;
     private int nextWayPointIndex;
     private int currentWayPointIndex;
-
     private float totalDistance;
-
 
     private void Awake()
     {
+        // Initialize NavMeshAgent and configure settings
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.avoidancePriority = (int)(agent.speed * 10);
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    // Sets up enemy with waypoints and portal reference
     public void SetupEnemy(List<Waypoint> newWaypoints, EnemyPortal myNewPortal)
     {
         myWaypoints = new List<Transform>();
@@ -45,95 +47,95 @@ public class Enemy : MonoBehaviour, IDamagable
         myPortal = myNewPortal;
     }
 
-
-    // Update is called once per frame
     private void Update()
     {
+        // Rotate to face the current steering target
         FaceTarget(agent.steeringTarget);
-        //checks if the agent is close to the current target point
+        // Check if the agent should move to the next waypoint
         if (ShouldChangeWaypoint())
-            //set the destination to the next waypoint
+        {
             agent.SetDestination(GetNextWayPoints());
+        }
     }
 
+    // Determines if the agent should switch to the next waypoint
     private bool ShouldChangeWaypoint()
     {
         if (nextWayPointIndex >= myWaypoints.Count) return false;
 
         if (agent.remainingDistance < 0.5) return true;
-        
+
         Vector3 currentWaypoint = myWaypoints[currentWayPointIndex].position;
         Vector3 nextWaypoint = myWaypoints[nextWayPointIndex].position;
 
         float distanceToNextWayPoint = Vector3.Distance(transform.position, nextWaypoint);
         float distanceBetweenPoints = Vector3.Distance(currentWaypoint, nextWaypoint);
 
-        return (distanceBetweenPoints > distanceToNextWayPoint);
-
-
+        return distanceBetweenPoints > distanceToNextWayPoint;
     }
 
+    // Applies damage to the enemy
     public void TakeDamage(int damage)
     {
         healthPoints -= damage;
         if (healthPoints <= 0) Die();
     }
 
+    // Calculates distance to the finish line
     public float DistanceToFinishLine()
     {
         return totalDistance + agent.remainingDistance;
     }
 
+    // Computes total distance between waypoints
     private void CollectTotalDistance()
     {
         for (var i = 0; i < myWaypoints.Count - 1; i++)
         {
-            var distance = Vector3.Distance(myWaypoints[i].position, myWaypoints[i + 1].position);//loops through and calculates the distance between each waypoint and add it
+            var distance = Vector3.Distance(myWaypoints[i].position, myWaypoints[i + 1].position);
             totalDistance += distance;
         }
     }
 
+    // Rotates enemy to face the target direction
     private void FaceTarget(Vector3 newTarget)
     {
-        //calculate the distance from current position to the new target
         var direction = newTarget - transform.position;
-        direction.y = 0; //removes vertical component
-        //create a rotation that points the forward vector up the calculated direction
+        direction.y = 0;
         var targetRotation = Quaternion.LookRotation(direction);
-        //smoothly rotate from the current rotation to the target rotation at the defined speed
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
     }
 
+    // Retrieves the next waypoint position
     private Vector3 GetNextWayPoints()
     {
-        //check if the waypoint index is beyond the last waypoint
         if (nextWayPointIndex >= myWaypoints.Count)
-            //if true . return the agent's current position,effectively stopping it
+        {
             return transform.position;
-        //get the current target point from the waypoints array
+        }
+
         var nextDestination = myWaypoints[nextWayPointIndex].position;
-        //if this is not the first waypoint , calculate the distance from the previous waypoint
         if (nextWayPointIndex > 0)
         {
             var distance = Vector3.Distance(myWaypoints[nextWayPointIndex].position, myWaypoints[nextWayPointIndex - 1].position);
-            //subtract this distance from the total distance
-            totalDistance = totalDistance - distance;
+            totalDistance -= distance;
         }
 
-        //increment the waypoint index to move to the next waypoint on the next call
         nextWayPointIndex++;
-        currentWayPointIndex=nextWayPointIndex-1;
-        //return the current target point;
+        currentWayPointIndex = nextWayPointIndex - 1;
         return nextDestination;
     }
 
-    public Vector3 CentrePoint()=>centerPoint.position;
+    // Returns the center point position
+    public Vector3 CentrePoint() => centerPoint.position;
+
+    // Returns the enemy type
     public EnemyType GetEnemyType() => enemyType;
 
+    // Handles enemy death
     private void Die()
     {
         myPortal.RemoveActiveEnemy(gameObject);
         Destroy(gameObject);
-        
     }
 }
