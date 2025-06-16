@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    [SerializeField] private float movementSpeed = 120;
     [Header(("Rotation Details"))]
     [SerializeField] private Transform focusPoint;
     [SerializeField] private float rotationSpeed = 200f;
@@ -12,18 +13,38 @@ public class CameraController : MonoBehaviour
     [SerializeField]private float maxPitch = 85f;
     [SerializeField] private float maxFocusPointDistance = 15;
     
+    [Header("Zoom details")]
+    [SerializeField] private float zoomSpeed=10;
+    [SerializeField] private float minZoom = 3;
+    [SerializeField] private float maxZoom = 15;
     
     
-    [SerializeField] private float movementSpeed = 120;
+    
     private float smoothTime = .1f;
     private Vector3 movementVelocity = Vector3.zero;
+    private Vector3 zoomVelocity = Vector3.zero;
 
     private void Update()
     {
         HandleMovement();
         HandleRotation();
+        HandleZoom();
 
         focusPoint.position = transform.position + (transform.forward * getFocusPointDistance());
+    }
+
+    private void HandleZoom()
+    {
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        Vector3 zoomDirection = transform.forward * scroll * zoomSpeed;
+        Vector3 targetPosition = transform.position + zoomDirection;
+
+        if (transform.position.y < minZoom && scroll > 0)
+       return;
+        if(transform.position.y>maxZoom &&scroll<0)return;
+
+        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref zoomVelocity, smoothTime);
+
     }
 
     private float getFocusPointDistance()
